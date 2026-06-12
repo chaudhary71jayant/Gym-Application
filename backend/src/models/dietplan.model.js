@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 const mealSchema = new mongoose.Schema({
     mealType : {
         type : String,
-        enum : ["breakfast", "morning_snack","lunch", "evening_snack", " dinner", "pre_workout", "post_workout"];
+        enum : ["breakfast", "morning_snack","lunch", "evening_snack", " dinner", "pre_workout", "post_workout"],
         required : true,
     },
     items : [

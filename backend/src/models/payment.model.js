@@ -1,0 +1,64 @@
+import mongoose from "mongoose";
+
+const paymentSchema = new mongoose.Schema({
+    member : {
+        type : mongoose.Schema.Types.ObjectId,
+        ref : "Member",
+        required : true,
+    },
+    amount : {
+        type : Number,
+        required : [true, "Payment amount is required"],
+        min : 0,
+    },
+    currency : {
+        type : String,
+        default : "INR",
+    },
+    paymentMethod : {
+        type : String,
+        enum : ["cash", "upi", "card", "net_banking","razropay","stripe"],
+        required : true
+    },
+    paymentStatus : {
+        type : String,
+        enum : ["success","failed","pending","refunded"],
+        default : "pending"
+    },
+    transactionID : {
+        type : String,
+        default : null
+    },
+    membershipPlan : {
+        type : String,
+        enum : ["monthly", "quaterly","half_yearly","yearly"],
+        required : true,
+    },
+    membershipStart : {
+        type : Date,
+        required : true,
+    },
+    membershipEnd : {
+        type : Date,
+        required : true,
+    },
+    paidAt : {
+        type : Date,
+        required : true,
+    },
+    notes : {
+        type : String,
+        default : "",
+    },
+
+}, { timestamps : true });
+
+paymentSchema.pre("save", function(next) {
+    if(this.isModified("paymentStatus") && this.paymentStatus === "success") {
+        this.paidAt = new Date();
+    }
+});
+
+const Payment = mongoose.model("Payment", paymentSchema);
+
+export default Payment;
