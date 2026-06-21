@@ -13,6 +13,15 @@ app.get('/', (req, res) => {
     res.send("Hello server is listening");
 });
 
+app.use((err,req,res,next) => {
+    console.error("Error stack : ", err.stack);
+
+    res.status(err.status || 500).json({
+        success : false,
+        message : err.message || "Internal server Error",
+    });
+})
+
 app.listen(PORT, () => {
     console.log("The app is listening at localhost 3000");
 });
