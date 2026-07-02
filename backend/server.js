@@ -19,10 +19,10 @@ app.get('/', (req, res) => {
 
 app.use(express.json());
 
-app.use("api/v1/auth", authRoutes)
-app.use("api/v1/member", memberRoutes);
-app.use("api/v1/trainer", trainerRoutes);
-app.use("api/v1/user", userRoutes);
+app.use("/api/v1/auth", authRoutes)
+app.use("/api/v1/member", memberRoutes);
+app.use("/api/v1/trainer", trainerRoutes);
+app.use("/api/v1/user", userRoutes);
 
 //centralized error handler
 app.use((err,req,res,next) => {
