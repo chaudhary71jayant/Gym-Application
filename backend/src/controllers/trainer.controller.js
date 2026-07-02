@@ -93,6 +93,50 @@ const getTrainerById = async(req,res,next) => {
     }
 };
 
+const updateTrainer = async(req,res,next) => {
+    try {
+        const trainer = await Trainer.findById(req.params.id);
+
+        if(!trainer) {
+            return res.status(404).json({
+                success : false,
+                message : "Trainer not found"
+            })
+        }
+
+        const isSelf = trainer.user.toString() === req.user.id;
+        const isAdmin = req.user.role === "admin";
+
+        if(!isSelf && !isAdmin){
+            return res.status(403).json({
+                success : true,
+                message : "Not authorized to update this profile"
+            });
+        }
+
+
+        const { specialization, experience, bio, isAvailable, maxCapacity } = req.body;
+
+        if(specialization !== undefined) trainer.specialization = specialization;
+        if(experience !== undefined) trainer.experience = experience;
+        if(bio !== undefined) trainer.bio = bio;
+        if(isAvailable !== undefined) trainer.isAvailable = isAvailable;
+
+        if(maxCapacity !== undefined && isAdmin) {
+            trainer.maxCapacity = maxCapacity;
+        }
+
+        await trainer.save();
+
+        res.status(200).json({
+            success : true,
+            trainer
+        });
+    } catch (error) {
+        next(error);
+    }
+}
+
 const deleteTrainer = async(req,res,next) => {
     try {
        const trainer = await Trainer.findById(req.params.id);
@@ -148,5 +192,5 @@ const getAssignedMembers = async(req,res,next) => {
     }
 }
 
-export { createTrainer, getAllTrainers, getTrainerById, getAssignedMembers, deleteTrainer  }
+export { createTrainer, getAllTrainers, getTrainerById, getAssignedMembers, deleteTrainer, updateTrainer  };
 

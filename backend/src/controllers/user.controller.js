@@ -1,6 +1,7 @@
 import User from "../models/user.model.js";
 import Member from "../models/member.model.js";
 import Trainer from "../models/trainer.model.js";
+import uploadToCloudainary from "../utils/uploading.js";
 
 const getAllUsers = async(req,resizeBy,next) => {
     try {
@@ -78,6 +79,29 @@ const getUserById = async(req,res,next) => {
     }
 }
 
+const uploadProfileImage = async (req,res,next) => {
+    try {
+        if(!req.file){
+            return res.status(400).json({success : false, message : "No image file provided"});
+        }
+
+        const result = await uploadToCloudainary(req.file.buffer);
+
+        const user = await User.findByIdAndUpdate(
+            req.user.id,
+            { profileImage : result.secure_url },
+            { new : true }
+        );
+
+        res.status(200).json({
+            success : true,
+            user
+        });
+    } catch (error) {
+        next(err);
+    }
+};
+
 const updatedUserStatus = async(req,res,next) => {
     try {
         const { isActive } = req.body;
@@ -127,4 +151,4 @@ const deleteUser = async(req,res,next) => {
     }
 };
 
-export { getAllUsers, getMyProfile, getUserById, updateUser, updatedUserStatus, deleteUser }
+export { getAllUsers, getMyProfile, getUserById, updateUser, updatedUserStatus, deleteUser, uploadProfileImage }
