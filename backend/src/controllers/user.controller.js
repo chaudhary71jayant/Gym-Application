@@ -2,6 +2,39 @@ import User from "../models/user.model.js";
 import Member from "../models/member.model.js";
 import Trainer from "../models/trainer.model.js";
 import uploadToCloudainary from "../utils/uploading.js";
+import bcrypt from "bcrypt";
+
+const createAdmin = async (req,res,next) =>{
+    try {
+        const { name , email , phone , password } = req.body;
+
+        const exsisting = await User.findOne({ email });
+
+        if(exsisting){
+            return res.status(400).json({
+                success : false,
+                message : "The admin already exsist."
+            });
+        }
+
+        const hashedPassword = await bcrypt.hash(password,12);
+
+        const user = await User.create({
+            name,
+            email,
+            phone,
+            password : hashedPassword,
+            role : "admin",
+        });
+
+        res.status(201).json({
+            success : true,
+            message : "Admin created successfully"
+        })
+    } catch (error) {
+        next(error);
+    }
+}
 
 const getAllUsers = async(req,resizeBy,next) => {
     try {
@@ -151,4 +184,4 @@ const deleteUser = async(req,res,next) => {
     }
 };
 
-export { getAllUsers, getMyProfile, getUserById, updateUser, updatedUserStatus, deleteUser, uploadProfileImage }
+export { createAdmin,getAllUsers, getMyProfile, getUserById, updateUser, updatedUserStatus, deleteUser, uploadProfileImage }

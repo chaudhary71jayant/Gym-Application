@@ -1,7 +1,7 @@
 import express from "express";
 import authMiddleware from "../middlewares/authmiddleware.js";
 import authorize from "../middlewares/rolemiddleware.js";
-import {  createTrainer, getAllTrainers, getTrainerById, getAssignedMembers, deleteTrainer } from "../controllers/trainer.controller.js";
+import {  createTrainer, getAllTrainers, getTrainerById, getAssignedMembers, deleteTrainer, updateTrainer } from "../controllers/trainer.controller.js";
 
 const router = express.Router();
 
