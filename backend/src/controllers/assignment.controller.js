@@ -7,6 +7,7 @@ const assignTrainer = async (req, res, next) => {
         const { memberId, trainerId } = req.body;
         const member = await Member.findById(memberId);
         const trainer = await Trainer.findById(trainerId);
+        
         if (!member) return res.status(404).json({ success: false, message: "Member not found" });
         if (!trainer) return res.status(404).json({ success: false, message: "Trainer not found" });
         if (!trainer.isAvailable) return res.status(400).json({ success: false, message: "Trainer is not available" });

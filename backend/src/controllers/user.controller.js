@@ -4,6 +4,20 @@ import Trainer from "../models/trainer.model.js";
 import uploadToCloudainary from "../utils/uploading.js";
 import bcrypt from "bcrypt";
 
+const getAllAdmins = async ( req, res, next ) => {
+    try {
+        const admins = (await User.find({ role : "admin"})).toSorted({createdAt : -1});
+
+        res.status(200).json({
+            success : true,
+            count : admins.length,
+            admins
+        });
+    } catch (error) {
+        next(error);
+    }
+}
+
 const createAdmin = async (req,res,next) =>{
     try {
         const { name , email , phone , password } = req.body;
@@ -36,10 +50,40 @@ const createAdmin = async (req,res,next) =>{
     }
 }
 
+const deleteAdmin = async ( req, res, next ) => {
+    try {
+        const user = await User.findById(req.params.id);
+
+        if(!user){
+            return res.status(404).json({
+                success : false,
+                message : "User not found."
+            });
+        }
+
+        if(user.role !== "admin") {
+            return res.status(403).json({
+                success : false,
+                message : "Superadmin can only delete admin accounts."
+            });
+        }
+
+        await user.deleteOne();
+
+        res.status(200).json({success : true, message : "Admin deleted successfully."});
+    } catch (error) {
+        next(error);
+    }
+}
+
 const getAllUsers = async(req,res,next) => {
     try {
         const { role } = req.query;
-        const filter = role ? { role } : {};
+        const filter = {role : { $nin : ["superAdmin", "admin"]}};
+
+        if( role && role !== "superAdmin" && role !== "admin"){
+            filter.role = role;
+        }
 
         const users = await User.find(filter).sort({ createdAt : -1});
 
@@ -67,14 +111,13 @@ const getMyProfile = async(req,res,next) => {
 
 const updateUser = async(req,res,next) => {
     try {
-        const { name,phone, profileImage } = req.body;
+        const { name,phone } = req.body;
 
         const user = await User.findByIdAndUpdate(
             req.user.id,
             {
                 name,
                 phone,
-                profileImage
             },
             {
                 new : true,
@@ -100,6 +143,13 @@ const getUserById = async(req,res,next) => {
             return res.status(404).json({
                 success : false,
                 message : "User don't exsists",
+            });
+        }
+
+        if(user.role === "superAdmin"){
+            return res.status(403).json({
+                success : false,
+                message : "Access Denied."
             });
         }
 
@@ -139,18 +189,31 @@ const updatedUserStatus = async(req,res,next) => {
     try {
         const { isActive } = req.body;
 
-        const user = await User.findByIdAndUpdate(
-            req.params.id,
-            { isActive },
-            { new : true },
-        );
+        if(req.user.role !== "admin") {
+            return res.status(403).json({
+                success : false,
+                message : "Only admins can update the status."
+            });
+        }
+
+        const user = await User.findById(req.params.id);
 
         if(!user){
             return res.status(404).json({
                 success : false,
-                message : "User not exist"
+                message : "User not found."
             });
         }
+
+        if(user.role === "superAdmin"){
+            return res.status(403).json({
+                success : false,
+                message : "Superadmin account cannot be modified."
+            });
+        }
+
+        user.isActive = isActive;
+        await user.save();
 
         res.status(200).json({
             success : true,
@@ -170,6 +233,13 @@ const deleteUser = async(req,res,next) => {
             return res.status(404).json({success : false, message : "User not found"});
         }
 
+        if(user.role === "superAdmin" || user.role === "admin"){
+            return res.status(403).json({
+                success : false,
+                message : "Admin cannot delete this account"
+            });
+        }
+
         if(user.role === "member"){
             await Member.findOneAndDelete({ user : user._id});
         } else if(user.role === "trainer"){
@@ -184,4 +254,4 @@ const deleteUser = async(req,res,next) => {
     }
 };
 
-export { createAdmin,getAllUsers, getMyProfile, getUserById, updateUser, updatedUserStatus, deleteUser, uploadProfileImage }
+export { createAdmin,getAllAdmins, getAllUsers, deleteAdmin, getMyProfile, getUserById, updateUser, updatedUserStatus, deleteUser, uploadProfileImage,  }

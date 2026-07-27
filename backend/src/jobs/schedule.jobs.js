@@ -141,7 +141,7 @@ const missedSessionAlertJob = () => {
 };
 
 const initScheduledJobs = () => {
-  membershipExpiryAlertJob();
+  memberShipExpiryAlertJob();
   markExpiredMembershipsJob();
   missedSessionAlertJob();
   console.log("✅ Scheduled jobs initialized");
