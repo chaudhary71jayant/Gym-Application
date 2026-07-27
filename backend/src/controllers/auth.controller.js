@@ -6,7 +6,11 @@ import generateToken from '../utils/tokenGenerator.util.js';
 
 const registerUser = async (req, res, next) => {
     try {
-        const { name,email,password,phone,fitnessGoal,membershipPlan,membershipStart,membershipEnd } = req.body;
+        const { name, email, password, phone, fitnessGoal, membershipPlan, membershipStart, membershipEnd } = req.body;
+
+        if (!name || !email || !password || !fitnessGoal) {
+            return res.status(400).json({ success: false, message: "name, email, password, and fitnessGoal are required" });
+        }
 
         const existingUser = await User.findOne({ email });
         if(existingUser){
@@ -90,7 +94,7 @@ const loginUser = async (req, res, next) => {
             });
         }
 
-        const token = generateToken(user._id, user._role);
+        const token = generateToken(user._id, user.role);
 
         res.status(200).json({
             success : true,
@@ -109,11 +113,15 @@ const loginUser = async (req, res, next) => {
 
 const changePassword = async ( req, res, next) => {
     try {
-        const { currentPassword, newPassword} = req.body;
+        const { currentPassword, newPassword } = req.body;
+
+        if (!currentPassword || !newPassword) {
+            return res.status(400).json({ success: false, message: "currentPassword and newPassword are required" });
+        }
 
         const user = await User.findById(req.user.id).select("+password");
 
-        const isMatch = await bcrypt.compare(password, user.password);
+        const isMatch = await bcrypt.compare(currentPassword, user.password);
 
         if(!isMatch){
             return res.status(401).json({
@@ -123,6 +131,7 @@ const changePassword = async ( req, res, next) => {
         }
 
         user.password = await bcrypt.hash(newPassword, 12);
+        await user.save();
 
         res.status(200).json({
             success : true,

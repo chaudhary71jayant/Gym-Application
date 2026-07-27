@@ -10,14 +10,14 @@ router.use(authMiddleware);
 router
     .route("/")
     .get(getAllTrainers)
-    .post(authorize("admin"), createTrainer);
+    .post(authorize("admin", "superAdmin"), createTrainer);
 
 router
     .route("/:id")
     .get(getTrainerById)
-    .put(authorize("admin", "trainer"), updateTrainer)
-    .delete(authorize("admin"), deleteTrainer);
+    .put(authorize("admin", "superAdmin", "trainer"), updateTrainer)
+    .delete(authorize("admin", "superAdmin"), deleteTrainer);
 
-router.get("/:id/members", authorize("admin", "trainer"), getAssignedMembers);
+router.get("/:id/members", authorize("admin", "superAdmin", "trainer"), getAssignedMembers);
 
 export default router;

@@ -1,8 +1,9 @@
 const authorize = (...allowedRoles) => {
     return (req,res,next) => {
-        if(!req.user || !allowedRoles.includes(req,user.role)){
+        if (!req.user || !allowedRoles.includes(req.user.role)) {
             return res.status(403).json({
-                message : `Access denied. Role '${role.user?.role}' is not permitted to access this resource`,
+                success: false,
+                message: `Access denied. Role '${req.user?.role ?? "unknown"}' is not permitted to access this resource`,
             });
         }
         next();

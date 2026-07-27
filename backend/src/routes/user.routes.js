@@ -13,10 +13,9 @@ router.put("/me", updateUser);
 router.put("/me/profile-image", upload.single("image"), uploadProfileImage);
 
 router.post("/create-admin", authorize("superAdmin"), createAdmin);
-router.delete("/:id", authorize("superAdmin"), deleteUser);
-router.get("/", authorize("admin"), getAllUsers);
-router.get("/:id", authorize("admin"), getUserById);
-router.put("/:id/status", authorize("admin"), updatedUserStatus);
-router.delete("/:id", authorize("admin"), deleteUser);
+router.get("/", authorize("admin", "superAdmin"), getAllUsers);
+router.get("/:id", authorize("admin", "superAdmin"), getUserById);
+router.put("/:id/status", authorize("admin", "superAdmin"), updatedUserStatus);
+router.delete("/:id", authorize("admin", "superAdmin"), deleteUser);
 
 export default router;

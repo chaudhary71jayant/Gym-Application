@@ -30,7 +30,7 @@ const notificatinSchema = new mongoose.Schema({
     },
     isRead : {
         type : Boolean,
-        required : true,
+        default: false,
     },
     link : {
         type : String,
@@ -40,6 +40,6 @@ const notificatinSchema = new mongoose.Schema({
 
 notificatinSchema.index({ recipient : 1, isRead : 1});
 
-const Notification = mongoose.Model("Notification", notificatinSchema);
+const Notification = mongoose.model("Notification", notificatinSchema);
 
 export default Notification;

@@ -74,6 +74,6 @@ dietPlanSchema.virtual("totalCalories").get(function () {
     }, 0);
 });
 
-const DietPlan = mongoose.Model("DietPlan", dietPlanSchema);
+const DietPlan = mongoose.model("DietPlan", dietPlanSchema);
 
 export default DietPlan;

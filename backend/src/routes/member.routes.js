@@ -8,12 +8,12 @@ const router = express.Router();
 router.use(authMiddleware);
 
 router.get("/me", authorize("member"), getMyMemberProfile);
-router.get("/", authorize("admin","trainer"), getAllMembers);
+router.get("/", authorize("admin", "superAdmin", "trainer"), getAllMembers);
 
 router
     .route("/:id")
     .get(getMemberById)
     .put(updateMember)
-    .delete(authorize("admin"),deleteMember);
+    .delete(authorize("admin", "superAdmin"),deleteMember);
 
 export default router;

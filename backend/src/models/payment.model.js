@@ -31,7 +31,7 @@ const paymentSchema = new mongoose.Schema({
     },
     membershipPlan : {
         type : String,
-        enum : ["monthly", "quaterly","half_yearly","yearly"],
+        enum : ["monthly", "quarterly", "half_yearly", "yearly"],
         required : true,
     },
     membershipStart : {
@@ -44,7 +44,9 @@ const paymentSchema = new mongoose.Schema({
     },
     paidAt : {
         type : Date,
-        required : true,
+        required: function () {
+            return this.paymentStatus === "success";
+        },
     },
     notes : {
         type : String,
@@ -53,7 +55,7 @@ const paymentSchema = new mongoose.Schema({
 
 }, { timestamps : true });
 
-paymentSchema.pre("save", function(next) {
+paymentSchema.pre("save", function() {
     if(this.isModified("paymentStatus") && this.paymentStatus === "success") {
         this.paidAt = new Date();
     }

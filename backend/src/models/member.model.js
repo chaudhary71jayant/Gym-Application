@@ -13,8 +13,8 @@ const memberSchema = new mongoose.Schema({
         default : null,
     },
     fitnessGoal : {
-        type : "String",
-        enum : ["Weight_loss","muscle_gain","endurance","flexiblity","general_fitness"],
+        type : String,
+        enum : ["weight_loss", "muscle_gain", "endurance", "flexibility", "general_fitness"],
         required : [true,"Fitness goal is required"],
     },
     age : {
@@ -23,8 +23,36 @@ const memberSchema = new mongoose.Schema({
     weight : {
         type : Number,
     },
-    
-});
+    height: {
+        type: Number,
+    },
+    healthConditions: {
+        type: String,
+        default: "",
+    },
+    membershipPlan: {
+        type: String,
+        enum: ["monthly", "quarterly", "half_yearly", "yearly"],
+        default: null,
+    },
+    membershipStart: {
+        type: Date,
+        default: null,
+    },
+    membershipEnd: {
+        type: Date,
+        default: null,
+    },
+    membershipStatus: {
+        type: String,
+        enum: ["pending", "active", "expired", "cancelled"],
+        default: "pending",
+    },
+    expiryAlertSent: {
+        type: Boolean,
+        default: false,
+    },
+}, { timestamps: true });
 
 const Member = mongoose.model("Member", memberSchema);
 

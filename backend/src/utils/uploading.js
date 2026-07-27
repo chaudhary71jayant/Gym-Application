@@ -7,11 +7,11 @@ const uploadToCloudinary = ( fileBuffer, folder = "Gym Application/profiles") =>
             {
                 folder,
                 resource_type : "image",
-                transformation : [{width : 500, height : 500, cropt : "fill", gravity : "face"}],
+                transformation : [{width : 500, height : 500, crop : "fill", gravity : "face"}],
             },
             (error, result) => {
                 if(error) return reject(error);
-                resolve(reject);
+                resolve(result);
             }
         );
 

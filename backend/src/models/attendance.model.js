@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-import Member from "./member.model";
 
 const attendanceSchema = new mongoose.Schema({
     member : {
@@ -13,11 +12,13 @@ const attendanceSchema = new mongoose.Schema({
     },
     checkIn : {
         type : Date,
-        required : true,
+        required: function () {
+            return this.status !== "absent";
+        },
     },
     checkOut : {
         type : Date,
-        required : true,
+        default: null,
     },
     status : {
         type : String,

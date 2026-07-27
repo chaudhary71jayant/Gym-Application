@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const excerciseSchema = new mongoose.Schema({
+const exerciseSchema = new mongoose.Schema({
     name : {
         type : String,
         required : true,
@@ -72,6 +72,6 @@ const workoutSchema = new mongoose.Schema({
     },
 }, {timestamps : true});
 
-const WorkoutPlan = new mongoose.model("WorkoutPlan", workoutSchema);
+const WorkoutPlan = mongoose.model("WorkoutPlan", workoutSchema);
 
 export default WorkoutPlan;

@@ -36,7 +36,7 @@ const createAdmin = async (req,res,next) =>{
     }
 }
 
-const getAllUsers = async(req,resizeBy,next) => {
+const getAllUsers = async(req,res,next) => {
     try {
         const { role } = req.query;
         const filter = role ? { role } : {};
@@ -103,7 +103,7 @@ const getUserById = async(req,res,next) => {
             });
         }
 
-        req.status(200).json({
+        res.status(200).json({
             success : true,
             user,
         });
@@ -131,7 +131,7 @@ const uploadProfileImage = async (req,res,next) => {
             user
         });
     } catch (error) {
-        next(err);
+        next(error);
     }
 };
 
@@ -164,7 +164,7 @@ const updatedUserStatus = async(req,res,next) => {
 
 const deleteUser = async(req,res,next) => {
     try {
-        const user = findById(req.params.id);
+        const user = await User.findById(req.params.id);
 
         if(!user){
             return res.status(404).json({success : false, message : "User not found"});

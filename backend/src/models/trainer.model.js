@@ -35,13 +35,13 @@ const trainerSchema = new mongoose.Schema({
       ref: "Member",
     },
   ],
-  maxcapacity : {
+  maxCapacity : {
     type : Number,
     default : 30,
   },
   isAvailable : {
     type : Boolean,
-    defualt : true,
+    default : true,
   },
 }, { timestamps : true });
 
@@ -50,7 +50,7 @@ trainerSchema.virtual("currentLoad").get(function() {
 });
 
 trainerSchema.virtual("isFull").get( function () {
-    return this.assignedMembers.length >= this.maxcapacity;
+    return this.assignedMembers.length >= this.maxCapacity;
 });
 
 const Trainer = mongoose.model("Trainer", trainerSchema);
