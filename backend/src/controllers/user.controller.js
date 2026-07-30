@@ -6,7 +6,7 @@ import bcrypt from "bcrypt";
 
 const getAllAdmins = async ( req, res, next ) => {
     try {
-        const admins = (await User.find({ role : "admin"})).toSorted({createdAt : -1});
+        const admins = await User.find({ role : "admin"}).sort({createdAt : -1});
 
         res.status(200).json({
             success : true,
