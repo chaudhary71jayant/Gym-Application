@@ -25,15 +25,33 @@ const createPayment = async (req, res, next) => {
 const updatePaymentStatus = async (req, res, next) => {
     try {
         const { paymentStatus } = req.body;
+
         const payment = await Payment.findById(req.params.id);
-        if (!payment) return res.status(404).json({ success: false, message: "Payment not found" });
+
+        if (!payment) {
+            return res.status(404).json({ success: false, message: "Payment not found" });
+        }
+
         if (!Payment.schema.path("paymentStatus").enumValues.includes(paymentStatus)) {
             return res.status(400).json({ success: false, message: "Invalid payment status" });
         }
 
         payment.paymentStatus = paymentStatus;
+
+        if(paymentStatus === "success"){
+            payment.paidAt = new Date();
+        }
+
         await payment.save();
+
         const member = await Member.findById(payment.member);
+
+        if(!member){
+            return res.status(404).json({
+                success : false,
+                message : "Member not found."
+            });
+        }
 
         if (paymentStatus === "success") {
             member.membershipPlan = payment.membershipPlan;
@@ -41,13 +59,28 @@ const updatePaymentStatus = async (req, res, next) => {
             member.membershipEnd = payment.membershipEnd;
             member.membershipStatus = "active";
             member.expiryAlertSent = false;
+
             await member.save();
-            await Notification.create({ recipient: member.user, type: "payment_success", title: "Payment confirmed", message: `Your ${payment.membershipPlan} membership is active until ${payment.membershipEnd.toDateString()}.` });
+
+            await Notification.create({ 
+                recipient: member.user,
+                type: "payment_success",
+                title: "Payment confirmed", message: `Your ${payment.membershipPlan} membership is active until ${payment.membershipEnd.toDateString()}.`
+             });
+
         } else if (paymentStatus === "failed") {
-            await Notification.create({ recipient: member.user, type: "payment_failed", title: "Payment failed", message: "Your membership payment could not be processed. Please contact the gym." });
+            await Notification.create({ 
+                recipient: member.user, 
+                type: "payment_failed", 
+                title: "Payment failed", 
+                message: "Your membership payment could not be processed. Please contact the gym." 
+            });
         }
 
-        res.status(200).json({ success: true, payment });
+        res.status(200).json({
+            success: true, 
+            payment 
+        });
     } catch (error) {
         next(error);
     }

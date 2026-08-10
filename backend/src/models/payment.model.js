@@ -17,7 +17,7 @@ const paymentSchema = new mongoose.Schema({
     },
     paymentMethod : {
         type : String,
-        enum : ["cash", "upi", "card", "net_banking","razropay","stripe"],
+        enum : ["cash", "upi", "card", "net_banking","razorpay","stripe"],
         required : true
     },
     paymentStatus : {
@@ -54,12 +54,6 @@ const paymentSchema = new mongoose.Schema({
     },
 
 }, { timestamps : true });
-
-paymentSchema.pre("save", function() {
-    if(this.isModified("paymentStatus") && this.paymentStatus === "success") {
-        this.paidAt = new Date();
-    }
-});
 
 const Payment = mongoose.model("Payment", paymentSchema);
 
