@@ -5,7 +5,7 @@ import Trainer from "../models/trainer.model.js";
 const createTrainer = async (req, res, next) => {
     try {
         const { name, email, password, phone, experience, bio, maxCapacity } = req.body;
-        const specialization = req.body.specialization ?? req.body.specializations;
+        const specialization = req.body.specialization ?? req.body.specialization;
         if (!name || !email || !password || !specialization || experience === undefined) {
             return res.status(400).json({ success: false, message: "name, email, password, specialization, and experience are required" });
         }

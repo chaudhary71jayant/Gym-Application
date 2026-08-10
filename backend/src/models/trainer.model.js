@@ -7,7 +7,7 @@ const trainerSchema = new mongoose.Schema({
     required: true,
     unique: true,
   },
-  specialization: {
+  specialization : {
     type: String,
     enum: [
       "weight_training",
