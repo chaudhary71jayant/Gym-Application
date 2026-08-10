@@ -46,7 +46,7 @@ const memberSchema = new mongoose.Schema({
     membershipStatus: {
         type: String,
         enum: ["pending", "active", "expired", "cancelled"],
-        default: "pending",
+        default: "active",
     },
     expiryAlertSent: {
         type: Boolean,

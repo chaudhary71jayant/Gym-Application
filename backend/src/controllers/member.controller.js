@@ -81,6 +81,45 @@ const updateMember = async (req, res, next) => {
     }
 };
 
+const updateMembershipStatus = async (req, res, next) => {
+    try {
+        const { membershipStatus } = req.body;
+
+        const allowedStatuses = ["active","expired","pending","cancelled"];
+
+        if(!allowedStatuses.includes(membershipStatus)){
+            return res.status(400).json({
+                success : false,
+                message : `Invalid status. Allowed values are : ${allowedStatuses.join(", ")}`,
+            });
+        }
+
+        const member = await Member.findById(req.params.id);
+
+        if(!member){
+            return res.status(404).json({
+                success : false,
+                message : "The member not found"
+            });
+        }
+
+        if(membershipStatus === "active"){
+            member.expiryAlertSent = false;
+        }
+
+        member.membershipStatus = membershipStatus;
+        await member.save();
+
+        res.status(200).json({
+            success : true,
+            message : `Membership status updated to "${membershipStatus}" successfully.`,
+            member
+        });
+    } catch (error) {
+        next(error);
+    }
+}
+
 const deleteMember = async (req, res, next) => {
     try {
         const member = await Member.findById(req.params.id);
@@ -97,4 +136,4 @@ const deleteMember = async (req, res, next) => {
     }
 };
 
-export { getAllMembers, getMemberById, getMyMemberProfile, updateMember, deleteMember };
+export { getAllMembers, getMemberById, getMyMemberProfile, updateMember,updateMembershipStatus, deleteMember };
