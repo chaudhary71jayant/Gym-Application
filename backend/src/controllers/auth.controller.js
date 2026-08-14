@@ -96,15 +96,39 @@ const loginUser = async (req, res, next) => {
 
         const token = generateToken(user._id, user.role);
 
+        res.cookie("token", token, {
+            httpOnly : true,
+            secure : false,
+            sameSite : "lax",
+            maxAge : 7*24*60*60*1000, //basically 7 days converted to the milliseconds.
+        })
+
         res.status(200).json({
             success : true,
-            token,
             user : {
                 id : user._id,
                 name : user.name,
                 email: user.email,
                 role : user.role,
             },
+        });
+    } catch (error) {
+        next(error);
+    }
+}
+
+const logoutUser = async ( req, res, next) => {
+    try {
+        res.cookie("token", "", {
+            httpOnly : true,
+            secure : false,
+            sameSite : "lax",
+            maxAge : 0,
+        })
+
+        res.status(200).json({
+            success : true,
+            message : "Logged out Successfully"
         });
     } catch (error) {
         next(error);
@@ -142,4 +166,4 @@ const changePassword = async ( req, res, next) => {
     }
 }
 
-export {loginUser, registerUser, changePassword };
+export {loginUser,logoutUser, registerUser, changePassword };

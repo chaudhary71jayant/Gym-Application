@@ -2,6 +2,8 @@ import dns from 'node:dns';
 dns.setServers(['8.8.8.8', '1.1.1.1']); 
 import express from "express";
 import dotenv from "dotenv";
+import cors from "cors";
+import cookieParser from 'cookie-parser';
 import connectdb from "./src/config/db.js";
 import authRoutes from "./src/routes/auth.routes.js";
 import memberRoutes from "./src/routes/member.routes.js";
@@ -23,7 +25,14 @@ connectdb();
 
 const app = express();
 app.use(express.json());
+app.use(cookieParser);
+app.use(cors({
+    origin : "http://localhost:5173", //Message : I will change this when i will deploy the application.
+    credentials : true,
+}));
 const PORT = Number(process.env.PORT) || 8080;
+
+
 
 app.get('/', (req, res) => {
     res.send("Hello server is listening");

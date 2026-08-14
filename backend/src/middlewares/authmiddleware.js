@@ -2,21 +2,14 @@ import jwt from "jsonwebtoken";
 
 const authMiddleware = (req,res,next) => {
     try {
-       const authHeader = req.headers.authorization;
+       const token = req.cookies.token;
        
-       if(!authHeader){
+       if(!token){
         return res.status(401).json({
             message : "No token Provided"
         });
-       } 
-
-       if(!authHeader.startsWith("Bearer ")){
-        return res.status(401).json({
-            message : "Invalid authorization format add Bearer please"
-        });
        }
 
-       const token = authHeader.split(" ")[1];
        const decoded = jwt.verify(
         token,
         process.env.JWT_SECRET_KEY
