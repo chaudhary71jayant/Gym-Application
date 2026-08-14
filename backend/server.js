@@ -24,12 +24,14 @@ dotenv.config();
 connectdb();
 
 const app = express();
-app.use(express.json());
-app.use(cookieParser);
+
 app.use(cors({
     origin : "http://localhost:5173", //Message : I will change this when i will deploy the application.
     credentials : true,
 }));
+app.use(express.json());
+app.use(cookieParser());
+
 const PORT = Number(process.env.PORT) || 8080;
 
 
