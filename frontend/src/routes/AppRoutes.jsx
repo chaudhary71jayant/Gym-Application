@@ -4,8 +4,8 @@ import ProtectedRoutes from "./protectedRoutes";
 
 import LoginPage from "../dashboards/auth/LoginPage";
 
-import SuperAdminDashboard from "../dashboards/superadmin/pages/SuperAdminDashboards";
-import ManageAdmins from "../dashboards/admin/pages/AdminDashBoard";
+import SuperAdminDashboard from "../dashboards/superadmin/pages/SuperAdminDashboard";
+import ManageAdmins from "../dashboards/superadmin/pages/ManageAdmins";
 
 import AdminDashboard from "../dashboards/admin/pages/AdminDashboard";
 import MembersPage from "../dashboards/admin/pages/MembersPage";
@@ -14,7 +14,7 @@ import PaymentsPage from "../dashboards/admin/pages/PaymentsPage";
 import AttendancePage from "../dashboards/admin/pages/AttendancePage";
 
 import TrainerDashboard from "../dashboards/trainer/pages/TrainerDashboard";
-import MyMembersPage from "../dashboards/member/pages/MyMembersPage";
+import MyMembersPage from "../dashboards/trainer/pages/MyMembersPage";
 
 import MemberDashboard from "../dashboards/member/pages/MemberDashboard";
 import CheckInPage from "../dashboards/member/pages/CheckInPage";
@@ -128,7 +128,7 @@ const AppRoutes = () => {
              />
             <Route path="/member/payments" element={
                 <ProtectedRoutes allowedRoles={["member"]}>
-                    <PaymentsPage/>
+                    <MemberPaymentsPage/>
                 </ProtectedRoutes>
             }
              />
