@@ -2,7 +2,7 @@ import DashboardLayout from "../../../components/layout/DashBoardLayout";
 
 const MembersPage = () => {
     return(
-        <DashboardLayout>
+        <DashboardLayout title="Members">
             <div className="text-white">Members Page </div>
         </DashboardLayout>
     )

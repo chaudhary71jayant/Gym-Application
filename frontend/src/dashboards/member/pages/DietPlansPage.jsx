@@ -3,7 +3,7 @@ import DashboardLayout from "../../../components/layout/DashBoardLayout";
 const DietPlansPage = () => {
 
     return (
-        <DashboardLayout>
+        <DashboardLayout title="Diet Plans">
             <div className="text-white">Diet Plans Page</div>
         </DashboardLayout>
     );

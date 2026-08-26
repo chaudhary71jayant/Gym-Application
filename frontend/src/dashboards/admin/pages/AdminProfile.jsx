@@ -2,7 +2,7 @@ import DashboardLayout from "../../../components/layout/DashBoardLayout";
 
 const AdminProfile = () => {
     return(
-        <DashboardLayout>
+        <DashboardLayout title="Profile">
             <div className="text-white">Admin Page</div>
         </DashboardLayout>
     )

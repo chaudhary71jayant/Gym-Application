@@ -2,7 +2,7 @@ import DashboardLayout from "../../../components/layout/DashBoardLayout";
 
 const WorkoutPlansPage = () => {
     return(
-        <DashboardLayout>
+        <DashboardLayout title="Workout Plans">
             <div className="text-white">Workout plans page</div>
         </DashboardLayout>
     )
