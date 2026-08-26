@@ -1,10 +1,10 @@
 import DashboardLayout from "../../../components/layout/DashBoardLayout";
 
-const MyMembersPage = () => {
+const AdminProfile = () => {
     return(
         <DashboardLayout>
-            <div className="text-white">My members page</div>
+            <div className="text-white">Admin Page</div>
         </DashboardLayout>
     )
 }
-export default MyMembersPage;
+export default AdminProfile;

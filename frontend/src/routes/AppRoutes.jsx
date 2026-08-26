@@ -6,17 +6,21 @@ import LoginPage from "../dashboards/auth/LoginPage";
 
 import SuperAdminDashboard from "../dashboards/superadmin/pages/SuperAdminDashboard";
 import ManageAdmins from "../dashboards/superadmin/pages/ManageAdmins";
+import SuperAdminProfile from "../dashboards/superadmin/pages/SuperAdminProfile";
 
 import AdminDashboard from "../dashboards/admin/pages/AdminDashboard";
+import AdminProfile from "../dashboards/admin/pages/AdminProfile";
 import MembersPage from "../dashboards/admin/pages/MembersPage";
 import TrainersPage from "../dashboards/admin/pages/TrainersPage";
 import PaymentsPage from "../dashboards/admin/pages/PaymentsPage";
 import AttendancePage from "../dashboards/admin/pages/AttendancePage";
 
 import TrainerDashboard from "../dashboards/trainer/pages/TrainerDashboard";
+import TrainerProfile from "../dashboards/trainer/pages/TrainerProfile";
 import MyMembersPage from "../dashboards/trainer/pages/MyMembersPage";
 
 import MemberDashboard from "../dashboards/member/pages/MemberDashboard";
+import MemberProfile from "../dashboards/member/pages/MemberProfilePage";
 import CheckInPage from "../dashboards/member/pages/CheckInPage";
 import WorkoutPlansPage from "../dashboards/member/pages/WorkoutPlansPage";
 import DietPlansPage from "../dashboards/member/pages/DietPlansPage";
@@ -51,6 +55,11 @@ const AppRoutes = () => {
                     <SuperAdminDashboard />
                 </ProtectedRoutes>
             } />
+            <Route path="/superadmin/profile" element={
+                <ProtectedRoutes allowedRoles={["superAdmin"]}>
+                    <SuperAdminProfile />
+                </ProtectedRoutes>
+            } />
             <Route path="/superadmin/admins" element = {
                 <ProtectedRoutes allowedRoles={["superAdmin"]}>
                     <ManageAdmins />
@@ -64,6 +73,11 @@ const AppRoutes = () => {
                 </ProtectedRoutes>
             }
             />
+            <Route path="/admin/profile" element={
+                <ProtectedRoutes allowedRoles={["admin"]}>
+                    <AdminProfile />
+                </ProtectedRoutes>
+            } />
             <Route path="/admin/members" element={
                 <ProtectedRoutes allowedRoles={["admin"]}>
                     <MembersPage />
@@ -95,6 +109,11 @@ const AppRoutes = () => {
                 </ProtectedRoutes>
             }
             />
+            <Route path="/trainer/profile" element={
+                <ProtectedRoutes allowedRoles={["trainer"]}>
+                    <TrainerProfile />
+                </ProtectedRoutes>
+            } />
             <Route path="/trainer/members" element={
                 <ProtectedRoutes allowedRoles={["trainer"]}>
                     <MyMembersPage />
@@ -108,6 +127,11 @@ const AppRoutes = () => {
                 </ProtectedRoutes>
             }
              />
+            <Route path="/member/profile" element={
+                <ProtectedRoutes allowedRoles={["member"]}>
+                    <MemberProfile />
+                </ProtectedRoutes>
+            } />
             <Route path="/member/checkin" element={
                 <ProtectedRoutes allowedRoles={["member"]}>
                     <CheckInPage />

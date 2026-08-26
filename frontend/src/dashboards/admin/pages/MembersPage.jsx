@@ -1,5 +1,11 @@
+import DashboardLayout from "../../../components/layout/DashBoardLayout";
+
 const MembersPage = () => {
-    return <div>Members Page </div>
+    return(
+        <DashboardLayout>
+            <div className="text-white">Members Page </div>
+        </DashboardLayout>
+    )
 }
 
 export default MembersPage;

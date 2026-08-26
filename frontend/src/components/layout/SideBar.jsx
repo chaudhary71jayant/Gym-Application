@@ -2,7 +2,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 
 const navLinks = {
-    SuperAdmin : [
+    superAdmin : [
         { label : "Dashboard", path : "/superadmin/dashboard"},
         { label : "Manage Admins", path : "/superadmin/admins" },
     ],

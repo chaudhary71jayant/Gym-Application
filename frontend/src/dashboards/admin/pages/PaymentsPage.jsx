@@ -1,5 +1,11 @@
+import DashboardLayout from "../../../components/layout/DashBoardLayout";
+
 const PaymentsPage = () => {
-    return <div>Payments Page</div>
+    return(
+        <DashboardLayout>
+            <div className="text-white">Payments Page</div>
+        </DashboardLayout>
+    )
 }
 
 export default PaymentsPage;

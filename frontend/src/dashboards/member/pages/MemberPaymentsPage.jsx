@@ -1,4 +1,10 @@
+import DashboardLayout from "../../../components/layout/DashBoardLayout";
+
 const MemberPaymentsPage = () => {
-    return <div>Member payments page</div>
+    return (
+        <DashboardLayout>
+            <div className="text-white">Member payments page</div>
+        </DashboardLayout>
+    )
 }
 export default MemberPaymentsPage;

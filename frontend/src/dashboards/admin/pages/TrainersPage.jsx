@@ -1,4 +1,11 @@
+import DashboardLayout from "../../../components/layout/DashBoardLayout";
+
 const TrainersPage = () => {
-    return <div>Trainers Page</div>
-}
+    return(
+        <DashboardLayout>
+            <div className="text-white">Trainers Page</div>
+        </DashboardLayout>
+    );
+};
+
 export default TrainersPage;

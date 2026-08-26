@@ -1,4 +1,10 @@
+import DashboardLayout from "../../../components/layout/DashBoardLayout";
+
 const AttendancePage = () =>{
-    return <div>Attendace Page </div>
+    return(
+        <DashboardLayout>
+            <div className="text-white">Attendace Page </div>
+        </DashboardLayout>
+    )
 }
 export default AttendancePage;
