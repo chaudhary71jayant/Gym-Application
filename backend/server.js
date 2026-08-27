@@ -15,6 +15,7 @@ import dietPlanRoutes from "./src/routes/dietPlan.routes.js";
 import notificationRoutes from "./src/routes/notification.routes.js";
 import paymentRoutes from "./src/routes/payment.routes.js";
 import workoutPlanRoutes from "./src/routes/workoutplan.routes.js";
+import statsRoutes from "./src/routes/stats.routes.js";
 import errorHandler from "./src/middlewares/errorhandler.js";
 import initScheduledJobs from "./src/jobs/schedule.jobs.js";
 
@@ -52,6 +53,7 @@ app.use("/api/v1/diet-plans", dietPlanRoutes);
 app.use("/api/v1/notifications", notificationRoutes);
 app.use("/api/v1/payments", paymentRoutes);
 app.use("/api/v1/workout-plans", workoutPlanRoutes);
+app.use("/api/v1/stats", statsRoutes);
 
 app.use(errorHandler);
 
