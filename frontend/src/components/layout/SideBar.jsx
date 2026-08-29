@@ -84,7 +84,7 @@ const Sidebar = () => {
       <div className="px-4 py-4 border-t border-gray-800">
         <div className="flex items-center gap-3 mb-3 px-2">
           {/* Avatar — first letter of user's name */}
-          <div className="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-white text-sm font-bold flex-shrink-0">
+          <div className="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-white text-sm font-bold shrink-0">
             {user?.name?.charAt(0).toUpperCase()}
           </div>
           <div className="overflow-hidden">
