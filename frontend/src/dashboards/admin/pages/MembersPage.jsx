@@ -52,6 +52,7 @@ const MembersPage = () => {
     return(
         <DashboardLayout title="Members">
             <div className="bg-gray-900 border border-grey-800 rounded-xl overflow-hidden">
+                <div className="overflow-x-auto">
                 {isLoading ? (
                     <div className="p-6  text-gray-400">Loading...</div>
                 ) : error ? (
@@ -121,8 +122,9 @@ const MembersPage = () => {
                             ))}
                         </tbody>
                     </table>
-
+                
                 )}
+                </div>
             </div>
         </DashboardLayout>
     )
