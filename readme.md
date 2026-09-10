@@ -4,7 +4,11 @@ A production-ready **REST API** built with the **MERN stack** (Node.js, Express.
 
 ---
 
+## Live Demo
 
+> Backend API Base URL: `https://gym-application-09kv.onrender.com`
+
+---
 
 ## Tech Stack
 
@@ -226,7 +230,7 @@ Frontend (form-data) → Multer (memory storage) → Cloudinary SDK → URL save
 
 ---
 
-## Setup & Installation
+##  Setup & Installation
 
 ### Prerequisites
 - Node.js v18+
@@ -270,7 +274,7 @@ SUPERADMIN_PASSWORD=your_strong_password
 
 ---
 
-## Testing
+##  Testing
 
 All endpoints tested via **Postman** with cookie-based authentication.
 
@@ -286,7 +290,7 @@ Test order:
 
 ---
 
-## Key Design Decisions
+##  Key Design Decisions
 
 **Separation of Concerns** — Controllers handle business logic, routes handle URL mapping, middleware handles cross-cutting concerns (auth, RBAC, uploads, errors).
 
