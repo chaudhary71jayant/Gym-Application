@@ -6,7 +6,7 @@ A production-ready **REST API** built with the **MERN stack** (Node.js, Express.
 
 ## Live Demo
 
-> Backend API Base URL: `https://gym-application-09kv.onrender.com`
+> Backend API Base URL: https://gym-application-09kv.onrender.com
 
 ---
 
