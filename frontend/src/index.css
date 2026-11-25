@@ -1,1 +1,162 @@
 @import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-display: "Plus Jakarta Sans", "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+}
+
+:root {
+  color-scheme: dark;
+  --scrollbar-track: #070b14;
+  --scrollbar-thumb: #334155;
+  scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
+  accent-color: #6366f1;
+}
+
+@supports not (scrollbar-color: auto) {
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--scrollbar-track);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-thumb);
+    border-radius: 9999px;
+    border: 2px solid var(--scrollbar-track);
+  }
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: #060913;
+  background-image:
+    radial-gradient(ellipse 80% 50% at 15% -10%, rgba(56, 189, 248, 0.08), transparent),
+    radial-gradient(ellipse 70% 45% at 85% 0%, rgba(99, 102, 241, 0.09), transparent);
+  background-attachment: fixed;
+  color: #f1f5f9;
+}
+
+h1, h2, h3, .font-display {
+  font-family: var(--font-display);
+}
+
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Native top-layer modal containment (prevents page scroll behind modal without locking html/body) */
+dialog:modal {
+  overscroll-behavior: contain;
+  color: inherit;
+}
+
+dialog::backdrop {
+  overflow: hidden;
+  overscroll-behavior: contain;
+  background: rgba(2, 6, 23, 0.78);
+  backdrop-filter: blur(6px);
+}
+
+dialog.mobile-drawer {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  max-width: none;
+  max-height: none;
+  height: 100svh;
+  width: min(18rem, 84dvw);
+}
+
+dialog.mobile-drawer[open] {
+  display: flex;
+}
+
+/* Accessible focus outlines across all controls */
+:is(a, button, input, select, textarea, [tabindex]):focus-visible {
+  outline: 2px solid #60a5fa;
+  outline-offset: 2px;
+}
+
+/* Prevent iOS zoom on form inputs while preserving compact desktop visual balance */
+input, select, textarea {
+  font-size: max(1rem, 0.875rem);
+}
+
+@media (min-width: 640px) {
+  input, select, textarea {
+    font-size: 0.875rem;
+  }
+}
+
+/* Reusable dark athletic surface styles */
+.glass-card {
+  background: linear-gradient(165deg, rgba(15, 23, 42, 0.88), rgba(10, 15, 29, 0.94));
+  border: 1px solid rgba(148, 163, 184, 0.14);
+  box-shadow: 0 10px 30px -12px rgba(2, 6, 23, 0.75);
+}
+
+.glass-card-hover {
+  transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+}
+
+.glass-card-hover:hover {
+  border-color: rgba(99, 102, 241, 0.35);
+  box-shadow: 0 18px 40px -15px rgba(59, 130, 246, 0.22);
+}
+
+.input-field {
+  width: 100%;
+  background-color: rgba(15, 23, 42, 0.85);
+  border: 1px solid rgba(148, 163, 184, 0.22);
+  color: #f8fafc;
+  border-radius: 0.75rem;
+  padding: 0.65rem 0.9rem;
+  transition: border-color 150ms ease, box-shadow 150ms ease, background-color 150ms ease;
+}
+
+.input-field::placeholder {
+  color: #94a3b8;
+}
+
+.input-field:hover:not(:disabled) {
+  border-color: rgba(148, 163, 184, 0.38);
+}
+
+.input-field:focus {
+  border-color: #6366f1;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.22);
+  outline: none;
+}
+
+.input-field:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+@keyframes toastIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.animate-toast-in {
+  animation: toastIn 200ms ease-out forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

@@ -1,12 +1,12 @@
 import api from "./api.js";
 
 const checkIn = async () => {
-  const response = await api.post("/attendance/checkin");
+  const response = await api.post("/attendance/checkIn");
   return response.data;
 };
 
 const checkOut = async () => {
-  const response = await api.put("/attendance/checkout");
+  const response = await api.put("/attendance/checkOut");
   return response.data;
 };
 
@@ -21,6 +21,11 @@ const getTodayAttendance = async () => {
   return response.data;
 };
 
-const attendanceService = { checkIn, checkOut, getMemberAttendance, getTodayAttendance };
+const attendanceService = {
+  checkIn,
+  checkOut,
+  getMemberAttendance,
+  getTodayAttendance,
+};
 
 export default attendanceService;

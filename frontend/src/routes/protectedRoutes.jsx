@@ -1,24 +1,19 @@
 import { Navigate } from "react-router-dom";
-import { useAuth } from "../context/AuthContext";
+import useAuth from "../hooks/useAuth";
+import { ROLE_HOME_ROUTES } from "../utils/constants";
 
-const ProtectedRoutes = ({ children , allowedRoles }) => {
-    const { user, isAuthenticated } = useAuth();
+const ProtectedRoutes = ({ children, allowedRoles }) => {
+  const { user, isAuthenticated } = useAuth();
 
-    if(!isAuthenticated){
-        return <Navigate to="/login" replace />
-    }
+  if (!isAuthenticated || !user) {
+    return <Navigate to="/login" replace />;
+  }
 
-    if(!allowedRoles.includes(user.role)){
-        const roleRedirects = {
-            superAdmin : "/superadmin/dashboard",
-            admin : "/admin/dashboard",
-            trainer : "/trainer/dashboard",
-            member : "/member/dashboard",
-        };
+  if (!allowedRoles.includes(user.role)) {
+    return <Navigate to={ROLE_HOME_ROUTES[user.role] || "/login"} replace />;
+  }
 
-        return <Navigate to={roleRedirects[user.role]} replace />;
-    }
-    return children;
-}
+  return children;
+};
 
 export default ProtectedRoutes;
