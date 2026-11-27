@@ -291,13 +291,16 @@ const MemberDashboard = () => {
 
           {/* KPI Strip */}
           <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
-            <StatCard
-              label="This Month Check-Ins"
-              value={attendanceData.summary?.presentDays ?? 0}
-              hint={`${attendanceData.summary?.totalDays ?? 0} recorded day(s)`}
-              icon={CalendarCheckIcon}
-              tone="emerald"
-            />
+            <Link to="/member/checkin">
+              <StatCard
+                label="This Month Check-Ins"
+                value={attendanceData.summary?.presentDays ?? 0}
+                hint={`${attendanceData.summary?.totalDays ?? 0} recorded day(s)`}
+                icon={CalendarCheckIcon}
+                tone="emerald"
+              />
+            </Link>
+
             <StatCard
               label="Workout Plans"
               value={workouts.length}

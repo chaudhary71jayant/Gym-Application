@@ -35,7 +35,7 @@ const StatCard = ({ label, value, hint, icon: Icon, tone = "indigo" }) => {
   const palette = TONES[tone] || TONES.indigo;
 
   return (
-    <div className="glass-card glass-card-hover relative overflow-hidden rounded-2xl p-5">
+    <div className="glass-card glass-card-hover relative overflow-hidden rounded-2xl p-5 h-full">
       <div
         aria-hidden="true"
         className={`pointer-events-none absolute inset-0 bg-gradient-to-br ${palette.glow}`}
